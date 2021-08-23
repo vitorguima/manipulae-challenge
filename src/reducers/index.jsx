@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import favoriteMusics from './favoriteMusics';
-import displayedMusics from './displayedMusics';
+import musicsToDisplay from './musicsToDisplay';
 
 const rootReducer = combineReducers({
   favoriteMusics,
-  displayedMusics,
+  musicsToDisplay,
 });
 
 export default rootReducer;

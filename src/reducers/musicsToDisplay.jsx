@@ -4,16 +4,16 @@ const INITIAL_STATE = {
   musicList: [],
 };
 
-function displayedMusics(state = INITIAL_STATE, { type, musicList }) {
+function musicsToDisplay(state = INITIAL_STATE, { type, musicList }) {
   switch (type) {
   case GET_TOP_MUSICS:
     return {
       ...state,
-      musicList,
+      musicList: [...state.musicList, ...musicList],
     };
   default:
     return state;
   }
 }
 
-export default displayedMusics;
+export default musicsToDisplay;
