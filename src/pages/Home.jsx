@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 
 import SearchBar from '../components/SearchBar';
 
+import getTopMusics from '../services/getTopMusics';
+
 function Home() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    getTopMusics().then((data) => console.log(data));
     // setLoading(true);
     // getMusicsList
     // setLoading(false);
