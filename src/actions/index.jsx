@@ -1,0 +1,2 @@
+export const GET_TOP_MUSICS = 'GET_TOP_MUSICS';
+export const NEW_FAVORITE_MUSIC = 'NEW_FAVORITE_MUSIC';
