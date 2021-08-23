@@ -1,12 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react';
 
-export default function SearchBar({ setMusicList }) {
-  const [searchType, setSearchType] = useState('artist');
-  const [searchedValue, setSearchedValue] = useState('');
+export default function SearchBar(props) {
+  const {
+    searchValue,
+    setSearchValue,
+    setSearchType,
+    setCustomSearch,
+    totalSearchs,
+    setTotalSearchs,
+  } = props;
   
   const handleSearch = (target) => {
     const { value } = target;
-    setSearchedValue(value);
+    setSearchValue(value);
+  }
+
+  const handleCustomSearch = () => {
+    setCustomSearch(true);
+    setTotalSearchs(totalSearchs + 1);
+  }
+
+  const cleanCustomSearch = () => {
+    setCustomSearch(false);
+    setSearchValue('');
+    setSearchType('');
   }
 
   return (
@@ -21,21 +38,27 @@ export default function SearchBar({ setMusicList }) {
             onChange={ ({ target }) => setSearchType(target.value) }
           />
         </label>
-        <input
-          name="search-type"
-          type="radio"
-          value="artist"
-          onChange={ ({ target }) => setSearchType(target.value) }
-        />
-        <input
-          name="search-type"
-          type="radio"
-          value="title"
-          onChange={ ({ target }) => setSearchType(target.value) }
-        />
+        <label>
+          Título
+          <input
+            name="search-type"
+            type="radio"
+            value="track"
+            onChange={ ({ target }) => setSearchType(target.value) }
+          />
+        </label>
+        <label>
+          Artista
+          <input
+            name="search-type"
+            type="radio"
+            value="artist"
+            onChange={ ({ target }) => setSearchType(target.value) }
+          />
+        </label>
         <label htmlFor="song-searchbar">
           <input
-            value={ searchedValue }
+            value={ searchValue }
             onChange={ (({ target }) => handleSearch(target)) }
             type="text"
             id="song-searchbar"
@@ -45,9 +68,15 @@ export default function SearchBar({ setMusicList }) {
 {/* inserir função que fará a busca conforme o tipo de pesquisa e irá alterar o musicList */}
         <button
           type="button"
-          onClick={() => console.log(searchedValue)}
+          onClick={() => handleCustomSearch()}
         >
           Buscar
+        </button>
+        <button
+          type="button"
+          onClick={() => cleanCustomSearch()}
+        >
+          Limpar
         </button>
       </form>
     </div>
