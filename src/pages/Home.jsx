@@ -25,29 +25,32 @@ export default function Home() {
     return(
       musicList
         .map((music, index) =>
-        <div>
+        <div key={index}>
           <p>{music.title}</p>
           <img 
             src={music.album.cover_medium} 
-            key={index} alt={music.title}
+            alt={music.title}
           />
           <p>{music.artist.name}</p>
-          <button
+          <audio src={music.preview} controls="controls"/>
+          {/* <button
             type="button"
             id={ music.preview }
           >
             play
-          </button>
+          </button> */}
         </div>)
     )
   }
 
-  const handleScroll = ({ currentTarget }) => {
+  const handleScroll = ({ target }) => {
     const { 
       scrollTop,
       clientHeight,
       scrollHeight,
-    } = currentTarget;
+    } = target;
+
+    console.log(scrollTop, clientHeight, scrollHeight);
 
     if (scrollHeight - scrollTop === clientHeight) {
       setListStartRange((previous) => previous + 20);
@@ -56,17 +59,21 @@ export default function Home() {
 
   return (
     <div>
-      <header>
+      <header style={ { borderBottom: 'solid black 1px', margin: '0', padding: '0' } }>
         <p>HOME HEADER</p>
+        <SearchBar
+          setMusicList={setMusicList}
+        />
       </header>
-      <SearchBar />
       <section>
-        <p>Music List</p>
         <Content onScroll={ handleScroll }>
           { musicList ? renderMusicList() : null }
         </Content>
         { isLoading ? <Loading>Loading...</Loading> : null }
       </section>
+      <footer style={ { borderBottom: 'solid black 1px', margin: '0', padding: '0' } }>
+        <p>HOME footer</p>
+      </footer>
     </div>
   )
 }
