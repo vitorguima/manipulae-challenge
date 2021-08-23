@@ -21,6 +21,7 @@ function MusicDisvorey({ saveFavoriteMusic }) {
   const [searchValue, setSearchValue] = useState('');
   const [isCustomSearch, setCustomSearch] = useState(false);
   const [totalSearchs, setTotalSearchs] = useState(0);
+  const [playingMusic, setPlayingMusic] = useState('');
 
   const observer = useRef();
 
@@ -89,7 +90,9 @@ function MusicDisvorey({ saveFavoriteMusic }) {
             <div>
               <p>{convertSecondsToMinutes(music.duration)}</p>
               <button
-              type="button"
+                type="button"
+                id={music.preview}
+                onClick={({target}) => setPlayingMusic(target.id)}
               >
                 Tocar
               </button>
@@ -116,6 +119,8 @@ function MusicDisvorey({ saveFavoriteMusic }) {
             <p>{convertSecondsToMinutes(music.duration)}</p>
             <button
               type="button"
+              id={music.preview}
+              onClick={({target}) => setPlayingMusic(target.id)}
             >
               Tocar
             </button>
@@ -152,7 +157,7 @@ function MusicDisvorey({ saveFavoriteMusic }) {
         { isLoading ? <Loading>Loading...</Loading> : null }
       </section>
       <Footer>
-        <p>MusicDisvorey footer</p>
+        <audio controls="controls" src={playingMusic} autoplay="autoplay"></audio>
       </Footer>
     </div>
   )
