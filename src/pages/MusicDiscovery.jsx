@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
-import { Loading } from '../styles/MusicList';
+import { connect } from 'react-redux';
+import { dispatchFavoriteMusic } from '../actions';
 
 import SearchBar from '../components/SearchBar';
 
@@ -8,9 +10,10 @@ import getTopMusics from '../services/getTopMusics';
 import customMusicSearch from '../services/customMusicSearch';
 
 import { Footer } from '../styles/Footer';
-import { Link } from 'react-router-dom';
+import { Header } from '../styles/Header';
+import { Loading } from '../styles/MusicList';
 
-export default function Home() {
+function MusicDisvorey({ saveFavoriteMusic }) {
   const [isLoading, setLoading] = useState(true);
   const [listRange, setlistRange] = useState(0);
   const [musicList, setMusicList] = useState([]);
@@ -25,8 +28,9 @@ export default function Home() {
     if (isLoading) return;
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver((entries) => {
+      const listRangeSum = 20;
       if(entries[0].isIntersecting) {
-        setlistRange((previousRange) => previousRange + 20);
+        setlistRange((previousRange) => previousRange + listRangeSum);
       }
     })
     if (node) observer.current.observe(node);
@@ -45,19 +49,26 @@ export default function Home() {
       setLoading(false);
     }
     setInicialMusicList();
-  }, [isCustomSearch, totalSearchs])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCustomSearch, totalSearchs]);
 
   useEffect(() => {
+    const lengthToNextLoad = 20;
     const setInicialMusicList = async () => {
       setLoading(true);
       const musicList = await customSearchOptions[isCustomSearch]();
       setMusicList((previousList) => [...previousList, ...musicList]);
       setLoading(false);
     }
-    if (listRange >= 20) {
+    if (listRange >= lengthToNextLoad) {
       setInicialMusicList();
     }
-  }, [listRange])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listRange]);
+
+  const convertSecondsToMinutes = (time) => {
+    return Math.floor(time / 60) + ":" + (time % 60 ? time % 60 : '00');
+  };
 
   const renderMusicList = () => {
     return(
@@ -76,13 +87,19 @@ export default function Home() {
             />
             <p>{music.artist.name}</p>
             <div>
-              <p></p>
-            </div>
-            <button
+              <p>{convertSecondsToMinutes(music.duration)}</p>
+              <button
               type="button"
-            >
-              Tocar
-            </button>
+              >
+                Tocar
+              </button>
+              <button
+                type="button"
+                onClick={({ target }) => saveFavoriteMusic(target.id)}
+              >
+                Favoritar
+              </button>
+            </div>
           </div>)
         }
         return (
@@ -95,18 +112,28 @@ export default function Home() {
             alt={music.title}
           />
           <p>{music.artist.name}</p>
-          <button
-            type="button"
-          >
-            Tocar
-          </button>
+          <div>
+            <p>{convertSecondsToMinutes(music.duration)}</p>
+            <button
+              type="button"
+            >
+              Tocar
+            </button>
+            <button
+              type="button"
+              id={music.id}
+              onClick={({ target }) => saveFavoriteMusic(target.id)}
+            >
+              Favoritar
+            </button>
+          </div>
         </div>)})
     )
   }
 
   return (
     <div>
-      <header>
+      <Header>
         <Link to="/">Músicas</Link>
         <Link to="/favorite-songs">Favoritas</Link>
         <SearchBar
@@ -117,7 +144,7 @@ export default function Home() {
           setTotalSearchs={setTotalSearchs}
           totalSearchs={totalSearchs}
         />
-      </header>
+      </Header>
       <section>
         <div>
           { musicList ? renderMusicList() : null }
@@ -125,9 +152,14 @@ export default function Home() {
         { isLoading ? <Loading>Loading...</Loading> : null }
       </section>
       <Footer>
-        <p>HOME footer</p>
+        <p>MusicDisvorey footer</p>
       </Footer>
     </div>
   )
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  saveFavoriteMusic: (musicId) => dispatch(dispatchFavoriteMusic(musicId)),
+});
+
+export default connect(null, mapDispatchToProps)(MusicDisvorey);

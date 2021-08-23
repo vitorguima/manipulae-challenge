@@ -1,15 +1,19 @@
-import getTopMusics from "../services/getTopMusics";
+import searchMusicById from "../services/searchMusicById";
 
-export const REQUEST_API = 'REQUEST_API';
-export const GET_TOP_MUSICS = 'GET_TOP_MUSICS';
 export const NEW_FAVORITE_MUSIC = 'NEW_FAVORITE_MUSIC';
+export const REMOVE_FAVORITE_MUSIC = 'REMOVE_FAVORITE_MUSIC';
 
-export const submitTopMusics = (musicList) => ({
-  type: GET_TOP_MUSICS,
-  musicList,
+export const submitFavoriteMusic = (musicData) => ({
+  type: NEW_FAVORITE_MUSIC,
+  newFavorite: musicData,
 });
 
-export const dispatchTopMusics = (index) => async (dispatch) => {
-  const musicList = await getTopMusics(index);
-  return dispatch(submitTopMusics(musicList));
+export const dispatchFavoriteMusic = (musicId) => async (dispatch) => {
+  const musicData = await searchMusicById(musicId);
+  return dispatch(submitFavoriteMusic(musicData));
 };
+
+export const removeFavoriteMusic = (newFavoriteList) => ({
+  type: REMOVE_FAVORITE_MUSIC,
+  newFavoriteList,
+});
