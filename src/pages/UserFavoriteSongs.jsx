@@ -19,6 +19,7 @@ import {
   RightCard,
   CardButtons,
 } from '../styles/MusicCardStyle';
+import { MusicListStyle } from '../styles/MusicListStyle';
 
 function UserFavoriteSongs({ favoriteList, setNewFavoriteList }) {
   const convertSecondsToMinutes = (time) => {
@@ -91,9 +92,9 @@ function UserFavoriteSongs({ favoriteList, setNewFavoriteList }) {
         </div>
       </Header>
       <section>
-        <div>
+        <MusicListStyle>
           { favoriteList ? renderMusicList() : null }
-        </div>
+        </MusicListStyle>
       </section>
       <Footer>
         <p>MusicFavorite footer</p>

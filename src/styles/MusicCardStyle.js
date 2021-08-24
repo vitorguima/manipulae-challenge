@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { colors } from './global';
 
 export const MusicCard = styled.div`
   display: flex;
@@ -63,6 +62,32 @@ export const CardButtons = styled.div`
 
   a {
     margin-left: 5px;
-    margin-top: 20px;
+    margin-top: 10px;
+  }
+`;
+
+export const PlayButton = styled.button`
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    background: #ACE1AF;
+  }
+`;
+
+export const FavoriteButton = styled.button`
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    background: #fd5c63;
   }
 `;

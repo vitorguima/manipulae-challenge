@@ -16,6 +16,8 @@ import AudioPlayer from '../components/AudioPlayer';
 import Navbar from '../components/Navbar';
 
 import deezerLogo from '../images/deezerLogo.png';
+import playButton from '../images/botao-play.png';
+import heartButton from '../images/heart.png';
 
 import {
   MusicCard,
@@ -24,7 +26,10 @@ import {
   MusicInformation,
   RightCard,
   CardButtons,
+  PlayButton,
+  FavoriteButton,
 } from '../styles/MusicCardStyle';
+import { MusicListStyle } from '../styles/MusicListStyle';
 
 function MusicDisvorey({ saveFavoriteMusic }) {
   const [isLoading, setLoading] = useState(true);
@@ -43,7 +48,7 @@ function MusicDisvorey({ saveFavoriteMusic }) {
     if (isLoading) return;
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver((entries) => {
-      const listRangeSum = 20;
+      const listRangeSum = 15;
       if(entries[0].isIntersecting) {
         setlistRange((previousRange) => previousRange + listRangeSum);
       }
@@ -68,7 +73,7 @@ function MusicDisvorey({ saveFavoriteMusic }) {
   }, [isCustomSearch, totalSearchs]);
 
   useEffect(() => {
-    const lengthToNextLoad = 20;
+    const lengthToNextLoad = 15;
     const setInicialMusicList = async () => {
       setLoading(true);
       const musicList = await customSearchOptions[isCustomSearch]();
@@ -113,20 +118,28 @@ function MusicDisvorey({ saveFavoriteMusic }) {
                 <p>Duração: {convertSecondsToMinutes(music.duration)}</p>
               </MusicInformation>
               <CardButtons >
-                <button
+                <PlayButton
                   type="button"
-                  id={music.preview}
                   onClick={({target}) => playOrPause(target)}
                 >
-                  Tocar
-                </button>
-                <button
+                  <img 
+                    src={playButton}
+                    alt="play-button"
+                    id={music.preview}
+                    className={music.id}
+                  />
+                </PlayButton>
+                <FavoriteButton
                   type="button"
                   id={music.id}
-                  onClick={({ target }) => saveFavoriteMusic(target.id)}
+                  onClick={({ target }) => saveFavoriteMusic(target.className)}
                 >
-                  Favoritar
-                </button>
+                  <img 
+                    src={heartButton}
+                    alt="play-button"
+                    id={music.id}
+                  />
+                </FavoriteButton>
                 <a href={music.link}>
                   <DeezerLogo src={ deezerLogo }/>
                 </a>
@@ -135,7 +148,7 @@ function MusicDisvorey({ saveFavoriteMusic }) {
           </MusicCard>)
         }
         return (
-          <MusicCard
+        <MusicCard
           key={index}
         >
           <AlbumImage>
@@ -151,20 +164,29 @@ function MusicDisvorey({ saveFavoriteMusic }) {
               <p>Duração: {convertSecondsToMinutes(music.duration)}</p>
             </MusicInformation>
             <CardButtons >
-              <button
+              <PlayButton
                 type="button"
-                id={music.preview}
                 onClick={({target}) => playOrPause(target)}
               >
-                Tocar
-              </button>
-              <button
+                <img 
+                  src={playButton}
+                  alt="play-button"
+                  id={music.preview}
+                  className={music.id}
+                />
+              </PlayButton>
+              <FavoriteButton
                 type="button"
-                onClick={({ target }) => saveFavoriteMusic(target.id)}
+                onClick={({ target }) => saveFavoriteMusic(target.className)}
                 id={music.id}
               >
-                Favoritar
-              </button>
+                <img 
+                  src={heartButton}
+                  alt="play-button"
+                  id={music.preview}
+                  className={music.id}
+                />
+              </FavoriteButton>
               <a href={music.link}>
                 <DeezerLogo src={ deezerLogo }/>
               </a>
@@ -189,13 +211,12 @@ function MusicDisvorey({ saveFavoriteMusic }) {
         />
       </Header>
       <section>
-        <div>
+        <MusicListStyle>
           { musicList ? renderMusicList() : null }
-        </div>
+        </MusicListStyle>
         { isLoading ? <Loading>Loading...</Loading> : null }
       </section>
       <Footer>
-        {/* <audio controls="controls" src={playingMusic} autoplay="autoplay"></audio> */}
         <AudioPlayer 
           musicUrl={playingMusic}
           isPlaying={isPlaying}

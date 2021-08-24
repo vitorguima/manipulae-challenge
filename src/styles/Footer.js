@@ -5,8 +5,9 @@ export const Footer = styled.footer`
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 80px;
-  background-color: red;
+  height: 6vh;
+  background: #F8F8F8;
   color: white;
   text-align: center; 
+  border-top: 1px solid #BEBEBE;
 `;
