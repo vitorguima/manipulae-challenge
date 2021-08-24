@@ -1,4 +1,6 @@
 import React from 'react';
+import { SearchBarStyle, SearchButton, ClearButton, CheckList } from '../styles/SearchbarStyle';
+import SearchIcon from '../svg/search.svg';
 
 export default function SearchBar(props) {
   const {
@@ -28,8 +30,20 @@ export default function SearchBar(props) {
 
   return (
     <div>
-      <form>
-        <label>
+      <form onSubmit={ ((e) => { e.preventDefault(); handleCustomSearch()}) }>
+        <SearchBarStyle>
+          <img src={SearchIcon} alt="search-icon"/>
+          <input
+            value={ searchValue }
+            onChange={ (({ target }) => handleSearch(target)) }
+            type="text"
+            id="song-searchbar"
+            placeholder="Digite sua busca..."
+          />
+        </SearchBarStyle>
+      </form>
+      <div>
+        <CheckList>
           Album
           <input
             name="search-type"
@@ -37,8 +51,8 @@ export default function SearchBar(props) {
             value="album"
             onChange={ ({ target }) => setSearchType(target.value) }
           />
-        </label>
-        <label>
+        </CheckList>
+        <CheckList>
           Título
           <input
             name="search-type"
@@ -46,8 +60,8 @@ export default function SearchBar(props) {
             value="track"
             onChange={ ({ target }) => setSearchType(target.value) }
           />
-        </label>
-        <label>
+        </CheckList>
+        <CheckList>
           Artista
           <input
             name="search-type"
@@ -55,30 +69,23 @@ export default function SearchBar(props) {
             value="artist"
             onChange={ ({ target }) => setSearchType(target.value) }
           />
-        </label>
-        <label htmlFor="song-searchbar">
-          <input
-            value={ searchValue }
-            onChange={ (({ target }) => handleSearch(target)) }
-            type="text"
-            id="song-searchbar"
-            placeholder="Encontre sua música aqui..."
-          />
-        </label>
-{/* inserir função que fará a busca conforme o tipo de pesquisa e irá alterar o musicList */}
-        <button
+        </CheckList>
+      </div>
+      <div style={ { margin: '10px' } }>
+      <SearchButton
           type="button"
           onClick={() => handleCustomSearch()}
         >
           Buscar
-        </button>
-        <button
+        </SearchButton>
+        <ClearButton
           type="button"
           onClick={() => cleanCustomSearch()}
         >
           Limpar
-        </button>
-      </form>
+        </ClearButton>
+      </div>
     </div>
+
   )
 }

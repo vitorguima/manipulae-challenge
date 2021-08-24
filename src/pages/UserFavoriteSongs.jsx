@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
@@ -7,6 +6,19 @@ import { Footer } from '../styles/Footer';
 import { Header } from '../styles/Header';
 
 import { removeFavoriteMusic } from '../actions/';
+import Navbar from '../components/Navbar';
+import SearchBar from '../components/SearchBar';
+
+import deezerLogo from '../images/deezerLogo.png';
+
+import {
+  MusicCard,
+  AlbumImage,
+  DeezerLogo,
+  MusicInformation,
+  RightCard,
+  CardButtons,
+} from '../styles/MusicCardStyle';
 
 function UserFavoriteSongs({ favoriteList, setNewFavoriteList }) {
   const convertSecondsToMinutes = (time) => {
@@ -28,67 +40,55 @@ function UserFavoriteSongs({ favoriteList, setNewFavoriteList }) {
     return(
       favoriteList
         .map((music, index) => {
-        if (favoriteList.length === index + 1) {
           return (
-          <div 
-            key={index}
-          >
-            <p>{music.title}</p>
+            <MusicCard
+          key={index}
+        >
+          <AlbumImage>
             <img 
               src={music.album.cover_medium} 
               alt={music.title}
             />
-            <p>{music.artist.name}</p>
-            <div>
-              <p>{convertSecondsToMinutes(music.duration)}</p>
-              <button
-              type="button"
+          </AlbumImage>
+          <RightCard>
+            <MusicInformation>
+              <p>{music.title}</p>
+              <p>Artista: {music.artist.name}</p>
+              <p>Duração: {convertSecondsToMinutes(music.duration)}</p>
+            </MusicInformation>
+            <CardButtons >
+              {/* <button
+                type="button"
+                id={music.preview}
+                onClick={({target}) => playOrPause(target)}
               >
                 Tocar
-              </button>
+              </button> */}
               <button
                 type="button"
                 onClick={({ target }) => removeFromFavorite(target.id)}
+                id={music.id}
               >
                 Remover
               </button>
-            </div>
-          </div>)
-        }
-        return (
-        <div 
-          key={index}
-        >
-          <p>{music.title}</p>
-          <img 
-            src={music.album.cover_medium} 
-            alt={music.title}
-          />
-          <p>{music.artist.name}</p>
-          <div>
-            <p>{convertSecondsToMinutes(music.duration)}</p>
-            <button
-              type="button"
-            >
-              Tocar
-            </button>
-            <button
-              type="button"
-              id={music.id}
-              onClick={({ target }) => removeFromFavorite(target.id)}
-            >
-              Remover
-            </button>
-          </div>
-        </div>)})
+              <a href={music.link}>
+                <DeezerLogo src={ deezerLogo }/>
+              </a>
+            </CardButtons>
+          </RightCard>
+        </MusicCard>
+        )
+      })
     )
   }
 
   return (
     <div>
       <Header>
-        <Link to="/">Músicas</Link>
-        <Link to="/favorite-songs">Favoritas</Link>
+        <Navbar />
+        <div style={ { visibility: 'hidden' } }>
+        <SearchBar />
+        </div>
       </Header>
       <section>
         <div>
