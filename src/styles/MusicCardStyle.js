@@ -91,3 +91,16 @@ export const FavoriteButton = styled.button`
     background: #fd5c63;
   }
 `;
+
+export const RemoveButton = styled.button`
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    background: #ffa500;
+  }
+`;

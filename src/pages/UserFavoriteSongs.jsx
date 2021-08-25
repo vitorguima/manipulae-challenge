@@ -10,6 +10,7 @@ import Navbar from '../components/Navbar';
 import SearchBar from '../components/SearchBar';
 
 import deezerLogo from '../images/deezerLogo.png';
+import removeIcon from '../images/remove-icon.png';
 
 import {
   MusicCard,
@@ -18,6 +19,7 @@ import {
   MusicInformation,
   RightCard,
   CardButtons,
+  RemoveButton,
 } from '../styles/MusicCardStyle';
 import { MusicListStyle } from '../styles/MusicListStyle';
 
@@ -65,13 +67,17 @@ function UserFavoriteSongs({ favoriteList, setNewFavoriteList }) {
               >
                 Tocar
               </button> */}
-              <button
+              <RemoveButton
                 type="button"
                 onClick={({ target }) => removeFromFavorite(target.id)}
                 id={music.id}
               >
-                Remover
-              </button>
+                <img 
+                  src={removeIcon}
+                  alt="play-button"
+                  id={music.id}
+                />
+              </RemoveButton>
               <a href={music.link}>
                 <DeezerLogo src={ deezerLogo }/>
               </a>
