@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react';
+
+import { connect } from 'react-redux';
+
+import AudioPlayer from './AudioPlayer';
 
 import deezerLogo from '../images/deezerLogo.png';
-import playButton from '../images/botao-play.png';
 import heartButton from '../images/heart.png';
 
 import {
@@ -11,21 +14,56 @@ import {
   MusicInformation,
   RightCard,
   CardButtons,
-  PlayButton,
   FavoriteButton,
+  IsFavoriteButton,
 } from '../styles/MusicCardStyle';
 
-const convertSecondsToMinutes = (time) => {
-  return Math.floor(time / 60) + ":" + (time % 60 ? time % 60 : '00');
-};
-
-export default function MusicCard(props) {
+function MusicCard(props) {
   const {
     music,
     musicRef,
-    playOrPause,
-    saveFavoriteList
+    saveFavoriteList,
+    favoriteList,
   } = props;
+
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const convertSecondsToMinutes = (time) => {
+    return Math.floor(time / 60) + ":" + (time % 60 ? time % 60 : '00');
+  };
+
+  const handleFavoriteButton = (musicId) => {
+    const musicIsFavorite = favoriteList ? favoriteList.some(({ id }) => id === musicId) : false;
+    const storageFavorites = JSON.parse(window.localStorage.getItem('favoriteMusics'));
+    const isOnStorage = storageFavorites ? storageFavorites.some(({ id }) => id === musicId) : false;
+
+    if (musicIsFavorite || isOnStorage) {
+      return (
+        <IsFavoriteButton
+        type="button"
+        id={music.id}
+      >
+        <img 
+          src={heartButton}
+          alt="play-button"
+          id={music.id}
+        />
+      </IsFavoriteButton>
+      )
+    } return (
+      <FavoriteButton
+      type="button"
+      id={music.id}
+      onClick={({ target }) => saveFavoriteList(target)}
+    >
+      <img 
+        src={heartButton}
+        alt="play-button"
+        id={music.id}
+      />
+    </FavoriteButton>
+    )
+  };
 
   return (
     <MusicCardWrapper
@@ -45,28 +83,12 @@ export default function MusicCard(props) {
           <p>Duração: {convertSecondsToMinutes(music.duration)}</p>
         </MusicInformation>
         <CardButtons >
-          <PlayButton
-            type="button"
-            onClick={({target}) => playOrPause(target)}
-          >
-            <img 
-              src={playButton}
-              alt="play-button"
-              id={music.preview}
-              className={music.id}
-            />
-          </PlayButton>
-          <FavoriteButton
-            type="button"
-            id={music.id}
-            onClick={({ target }) => saveFavoriteList(target)}
-          >
-            <img 
-              src={heartButton}
-              alt="play-button"
-              id={music.id}
-            />
-          </FavoriteButton>
+        <AudioPlayer 
+          musicUrl={music.preview}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+        />
+          { handleFavoriteButton(music.id) }
           <a href={music.link}>
             <DeezerLogo src={ deezerLogo }/>
           </a>
@@ -75,3 +97,9 @@ export default function MusicCard(props) {
     </MusicCardWrapper>
   )
 }
+
+const mapStateToProps = (state) => ({
+  favoriteList: state.favoriteMusics.favoriteList,
+});
+
+export default connect(mapStateToProps)(MusicCard);

@@ -92,6 +92,15 @@ export const FavoriteButton = styled.button`
   }
 `;
 
+export const IsFavoriteButton = styled.button`
+  padding: 5px 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #fd5c63;
+  cursor: pointer;
+  text-align: center;
+`;
+
 export const RemoveButton = styled.button`
   padding: 5px 10px;
   border: 1px solid transparent;

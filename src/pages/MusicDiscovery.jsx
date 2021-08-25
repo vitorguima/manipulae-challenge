@@ -10,11 +10,9 @@ import getTopMusics from '../services/getTopMusics';
 import customMusicSearch from '../services/customMusicSearch';
 import searchMusicById from "../services/searchMusicById";
 
-import { Footer } from '../styles/Footer';
 import { Header } from '../styles/Header';
 import { Loading } from '../styles/MusicList';
 
-import AudioPlayer from '../components/AudioPlayer';
 import Navbar from '../components/Navbar';
 
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -29,8 +27,6 @@ function MusicDisvorey({ saveFavoriteMusic }) {
   const [searchValue, setSearchValue] = useState('');
   const [isCustomSearch, setCustomSearch] = useState(false);
   const [totalSearchs, setTotalSearchs] = useState(0);
-  const [playingMusic, setPlayingMusic] = useState('');
-  const [isPlaying, setIsPlaying] = useState(false);
   const [favoriteStorage, setFavoriteStorage] = useLocalStorage('favoriteMusics', []);
 
   const observer = useRef();
@@ -77,11 +73,6 @@ function MusicDisvorey({ saveFavoriteMusic }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listRange]);
 
-  const playOrPause = (target) => {
-    setPlayingMusic(target.id)
-    setIsPlaying((previous) => !previous);
-  };
-
   const saveFavoriteList = async (target) => {
     const { id } = target;
     const musicData = await searchMusicById(id)
@@ -100,7 +91,6 @@ function MusicDisvorey({ saveFavoriteMusic }) {
             key={index}
             music={music}
             musicRef={lastMusicElementRef}
-            playOrPause={playOrPause}
             saveFavoriteList={saveFavoriteList}
           />
         )}
@@ -108,7 +98,6 @@ function MusicDisvorey({ saveFavoriteMusic }) {
         <MusicCard 
           key={index}
           music={music}
-          playOrPause={playOrPause}
           saveFavoriteList={saveFavoriteList}
         />
       )})
@@ -134,13 +123,6 @@ function MusicDisvorey({ saveFavoriteMusic }) {
         </MusicListStyle>
         { isLoading ? <Loading>Loading...</Loading> : null }
       </section>
-      <Footer>
-        <AudioPlayer 
-          musicUrl={playingMusic}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-        />
-      </Footer>
     </div>
   )
 }
