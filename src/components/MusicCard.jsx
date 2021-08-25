@@ -32,6 +32,7 @@ function MusicCard(props) {
     return Math.floor(time / 60) + ":" + (time % 60 ? time % 60 : '00');
   };
 
+
   const handleFavoriteButton = (musicId) => {
     const musicIsFavorite = favoriteList ? favoriteList.some(({ id }) => id === musicId) : false;
     const storageFavorites = JSON.parse(window.localStorage.getItem('favoriteMusics'));
@@ -42,6 +43,7 @@ function MusicCard(props) {
         <IsFavoriteButton
         type="button"
         id={music.id}
+        onClick={({ target }) => saveFavoriteList(target)}
       >
         <img 
           src={heartButton}
@@ -79,8 +81,8 @@ function MusicCard(props) {
       <RightCard>
         <MusicInformation>
           <p>{music.title}</p>
-          <p>Artista: {music.artist.name}</p>
-          <p>Duração: {convertSecondsToMinutes(music.duration)}</p>
+          <p>{music.artist.name}</p>
+          <p>{convertSecondsToMinutes(music.duration)}</p>
         </MusicInformation>
         <CardButtons >
         <AudioPlayer 

@@ -10,14 +10,14 @@ import getTopMusics from '../services/getTopMusics';
 import customMusicSearch from '../services/customMusicSearch';
 import searchMusicById from "../services/searchMusicById";
 
-import { Header } from '../styles/Header';
-import { Loading } from '../styles/MusicList';
+import { Header, NavWrapper, SearchBarWrapper } from '../styles/Header';
 
 import Navbar from '../components/Navbar';
 
 import useLocalStorage from '../hooks/useLocalStorage';
 
-import { MusicListStyle } from '../styles/MusicListStyle';
+import { MusicListStyle, MusicListWrapper } from '../styles/MusicListStyle';
+import Spinner from '../styles/Spinner';
 
 function MusicDisvorey({ saveFavoriteMusic }) {
   const [isLoading, setLoading] = useState(true);
@@ -76,9 +76,13 @@ function MusicDisvorey({ saveFavoriteMusic }) {
   const saveFavoriteList = async (target) => {
     const { id } = target;
     const musicData = await searchMusicById(id)
-    const newMusicList = [...favoriteStorage, musicData];
-    saveFavoriteMusic(newMusicList);
-    setFavoriteStorage(newMusicList);
+    const musicIsFavorite = favoriteStorage.some((music) => music.id.toString() === id.toString());
+    
+    if (!musicIsFavorite) {
+      const newMusicList = [...favoriteStorage, musicData];
+      saveFavoriteMusic(newMusicList);
+      setFavoriteStorage(newMusicList);
+    }
   };
 
   const renderMusicList = () => {
@@ -107,22 +111,26 @@ function MusicDisvorey({ saveFavoriteMusic }) {
   return (
     <div>
       <Header>
-        <Navbar />
-        <SearchBar
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-          setSearchType={setSearchType}
-          setCustomSearch={setCustomSearch}
-          setTotalSearchs={setTotalSearchs}
-          totalSearchs={totalSearchs}
-        />
+        <NavWrapper>
+          <Navbar />
+        </NavWrapper>
+        <SearchBarWrapper>
+          <SearchBar
+            searchValue={searchValue}
+            setSearchValue={setSearchValue}
+            setSearchType={setSearchType}
+            setCustomSearch={setCustomSearch}
+            setTotalSearchs={setTotalSearchs}
+            totalSearchs={totalSearchs}
+          />
+        </SearchBarWrapper>
       </Header>
-      <section>
+      <MusicListWrapper>
         <MusicListStyle>
           { musicList ? renderMusicList() : null }
         </MusicListStyle>
-        { isLoading ? <Loading>Loading...</Loading> : null }
-      </section>
+        { isLoading ? <Spinner></Spinner> : null }
+      </MusicListWrapper>
     </div>
   )
 }

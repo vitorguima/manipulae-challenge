@@ -15,7 +15,6 @@ export const SearchBarStyle = styled.div`
     border-radius: 100px;
     border: 1px solid #BEBEBE;
     font-size: 14px; 
-    position: relative;
     outline: none;
     color: ${colors.black};
     &::placeholder {
@@ -48,12 +47,11 @@ export const SearchButton = styled.span`
   margin: 5px 25px;
   font-size: 14px;
   text-decoration: none;
-  // border-radius: 100px;
+  border-radius: 100px;
   &:hover {
     background: #ACE1AF;
     color: ${colors.black};
     box-shadow: 0 0 5px rgba(33,33,33,.2);
-    text-decoration: underline; 
   }
 `;
 
@@ -68,12 +66,11 @@ export const ClearButton = styled.span`
   margin: 8px 25px;
   font-size: 14px;
   text-decoration: none;
-  // border-radius: 100px;
+  border-radius: 100px;
   &:hover {
     background: #fd5c63;
     color: ${colors.white};
     box-shadow: 0 0 5px rgba(33,33,33,.2);
-    text-decoration: underline; 
   }
 `;
 

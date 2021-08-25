@@ -29,7 +29,7 @@ export default function SearchBar(props) {
   }
 
   return (
-    <div>
+    <>
       <form onSubmit={ ((e) => { e.preventDefault(); handleCustomSearch()}) }>
         <SearchBarStyle>
           <img src={SearchIcon} alt="search-icon"/>
@@ -85,7 +85,6 @@ export default function SearchBar(props) {
           Limpar
         </ClearButton>
       </div>
-    </div>
-
+    </>
   )
 }

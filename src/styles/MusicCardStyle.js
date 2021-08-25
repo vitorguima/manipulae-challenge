@@ -5,7 +5,7 @@ export const MusicCardWrapper = styled.div`
   align-items: center;
   align-content: center;
   border: 1px solid #B8B8B8;
-  width: 30%;
+  width: 578px;
   height: 250px;
   margin: 10px;
   border-top-right-radius: 10px;
