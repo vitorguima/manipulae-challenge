@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { connect } from 'react-redux';
 
@@ -6,45 +6,66 @@ import { Footer } from '../styles/Footer';
 import { Header } from '../styles/Header';
 
 import { removeFavoriteMusic } from '../actions/';
+
+import AudioPlayer from '../components/AudioPlayer';
 import Navbar from '../components/Navbar';
 import SearchBar from '../components/SearchBar';
 
 import deezerLogo from '../images/deezerLogo.png';
 import removeIcon from '../images/remove-icon.png';
+import playButton from '../images/botao-play.png';
+
+import useLocalStorage from '../hooks/useLocalStorage';
 
 import {
-  MusicCard,
+  MusicCardWrapper,
   AlbumImage,
   DeezerLogo,
   MusicInformation,
   RightCard,
   CardButtons,
   RemoveButton,
+  PlayButton,
 } from '../styles/MusicCardStyle';
+
 import { MusicListStyle } from '../styles/MusicListStyle';
 
 function UserFavoriteSongs({ favoriteList, setNewFavoriteList }) {
+  const [favoriteStorage, setFavoriteStorage] = useLocalStorage('favoriteMusics', []);
+  const [favoriteMusics, setFavoriteMusics] = useState(favoriteList.length ? favoriteList : favoriteStorage);
+  const [playingMusic, setPlayingMusic] = useState('');
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const convertSecondsToMinutes = (time) => {
     return Math.floor(time / 60) + ":" + (time % 60 ? time % 60 : '00');
   };
 
   const removeFromFavorite = (musicId) => {
-    const currentFavorites = [...favoriteList];
+    const currentFavorites = [...favoriteMusics];
     if (currentFavorites.length === 1) {
       setNewFavoriteList([]);
+      setFavoriteStorage([])
+      setFavoriteMusics([]);
     } else {
       const newFavorites = currentFavorites
       .filter(({ id }) => id.toString() !== musicId.toString());
       setNewFavoriteList(newFavorites);
+      setFavoriteStorage(newFavorites);
+      setFavoriteMusics(newFavorites);
     }
   }
+
+  const playOrPause = (target) => {
+    setPlayingMusic(target.id)
+    setIsPlaying((previous) => !previous);
+  };
   
   const renderMusicList = () => {
     return(
-      favoriteList
+      favoriteMusics
         .map((music, index) => {
           return (
-            <MusicCard
+            <MusicCardWrapper
           key={index}
         >
           <AlbumImage>
@@ -60,13 +81,17 @@ function UserFavoriteSongs({ favoriteList, setNewFavoriteList }) {
               <p>Duração: {convertSecondsToMinutes(music.duration)}</p>
             </MusicInformation>
             <CardButtons >
-              {/* <button
-                type="button"
+            <PlayButton
+              type="button"
+              onClick={({target}) => playOrPause(target)}
+            >
+              <img 
+                src={playButton}
+                alt="play-button"
                 id={music.preview}
-                onClick={({target}) => playOrPause(target)}
-              >
-                Tocar
-              </button> */}
+                className={music.id}
+              />
+            </PlayButton>
               <RemoveButton
                 type="button"
                 onClick={({ target }) => removeFromFavorite(target.id)}
@@ -83,7 +108,7 @@ function UserFavoriteSongs({ favoriteList, setNewFavoriteList }) {
               </a>
             </CardButtons>
           </RightCard>
-        </MusicCard>
+        </MusicCardWrapper>
         )
       })
     )
@@ -99,11 +124,15 @@ function UserFavoriteSongs({ favoriteList, setNewFavoriteList }) {
       </Header>
       <section>
         <MusicListStyle>
-          { favoriteList ? renderMusicList() : null }
+          { favoriteList || favoriteStorage ? renderMusicList() : null }
         </MusicListStyle>
       </section>
       <Footer>
-        <p>MusicFavorite footer</p>
+      <AudioPlayer 
+          musicUrl={playingMusic}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
+        />
       </Footer>
     </div>
   )

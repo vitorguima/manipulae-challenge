@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { dispatchFavoriteMusic } from '../actions';
 
 import SearchBar from '../components/SearchBar';
+import MusicCard from '../components/MusicCard';
 
 import getTopMusics from '../services/getTopMusics';
 import customMusicSearch from '../services/customMusicSearch';
+import searchMusicById from "../services/searchMusicById";
 
 import { Footer } from '../styles/Footer';
 import { Header } from '../styles/Header';
@@ -15,20 +17,8 @@ import { Loading } from '../styles/MusicList';
 import AudioPlayer from '../components/AudioPlayer';
 import Navbar from '../components/Navbar';
 
-import deezerLogo from '../images/deezerLogo.png';
-import playButton from '../images/botao-play.png';
-import heartButton from '../images/heart.png';
+import useLocalStorage from '../hooks/useLocalStorage';
 
-import {
-  MusicCard,
-  AlbumImage,
-  DeezerLogo,
-  MusicInformation,
-  RightCard,
-  CardButtons,
-  PlayButton,
-  FavoriteButton,
-} from '../styles/MusicCardStyle';
 import { MusicListStyle } from '../styles/MusicListStyle';
 
 function MusicDisvorey({ saveFavoriteMusic }) {
@@ -41,6 +31,7 @@ function MusicDisvorey({ saveFavoriteMusic }) {
   const [totalSearchs, setTotalSearchs] = useState(0);
   const [playingMusic, setPlayingMusic] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
+  const [favoriteStorage, setFavoriteStorage] = useLocalStorage('favoriteMusics', []);
 
   const observer = useRef();
 
@@ -86,13 +77,17 @@ function MusicDisvorey({ saveFavoriteMusic }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listRange]);
 
-  const convertSecondsToMinutes = (time) => {
-    return Math.floor(time / 60) + ":" + (time % 60 ? time % 60 : '00');
-  };
-
   const playOrPause = (target) => {
     setPlayingMusic(target.id)
     setIsPlaying((previous) => !previous);
+  };
+
+  const saveFavoriteList = async (target) => {
+    const { id } = target;
+    const musicData = await searchMusicById(id)
+    const newMusicList = [...favoriteStorage, musicData];
+    saveFavoriteMusic(newMusicList);
+    setFavoriteStorage(newMusicList);
   };
 
   const renderMusicList = () => {
@@ -101,98 +96,19 @@ function MusicDisvorey({ saveFavoriteMusic }) {
         .map((music, index) => {
         if (musicList.length === index + 1) {
           return (
-          <MusicCard
-            key={index}
-            ref={lastMusicElementRef}
-          >
-            <AlbumImage>
-              <img
-                src={music.album.cover_medium} 
-                alt={music.title}
-              />
-            </AlbumImage>
-            <RightCard>
-              <MusicInformation>
-                <p>{music.title}</p>
-                <p>Artista: {music.artist.name}</p>
-                <p>Duração: {convertSecondsToMinutes(music.duration)}</p>
-              </MusicInformation>
-              <CardButtons >
-                <PlayButton
-                  type="button"
-                  onClick={({target}) => playOrPause(target)}
-                >
-                  <img 
-                    src={playButton}
-                    alt="play-button"
-                    id={music.preview}
-                    className={music.id}
-                  />
-                </PlayButton>
-                <FavoriteButton
-                  type="button"
-                  id={music.id}
-                  onClick={({ target }) => saveFavoriteMusic(target.className)}
-                >
-                  <img 
-                    src={heartButton}
-                    alt="play-button"
-                    id={music.id}
-                  />
-                </FavoriteButton>
-                <a href={music.link}>
-                  <DeezerLogo src={ deezerLogo }/>
-                </a>
-              </CardButtons >
-            </RightCard>
-          </MusicCard>)
-        }
+          <MusicCard 
+            music={music}
+            musicRef={lastMusicElementRef}
+            playOrPause={playOrPause}
+            saveFavoriteList={saveFavoriteList}
+          />
+        )}
         return (
-        <MusicCard
-          key={index}
-        >
-          <AlbumImage>
-            <img 
-              src={music.album.cover_medium} 
-              alt={music.title}
-            />
-          </AlbumImage>
-          <RightCard>
-            <MusicInformation>
-              <p>{music.title}</p>
-              <p>Artista: {music.artist.name}</p>
-              <p>Duração: {convertSecondsToMinutes(music.duration)}</p>
-            </MusicInformation>
-            <CardButtons >
-              <PlayButton
-                type="button"
-                onClick={({target}) => playOrPause(target)}
-              >
-                <img 
-                  src={playButton}
-                  alt="play-button"
-                  id={music.preview}
-                  className={music.id}
-                />
-              </PlayButton>
-              <FavoriteButton
-                type="button"
-                onClick={({ target }) => saveFavoriteMusic(target.className)}
-                id={music.id}
-              >
-                <img 
-                  src={heartButton}
-                  alt="play-button"
-                  id={music.preview}
-                  className={music.id}
-                />
-              </FavoriteButton>
-              <a href={music.link}>
-                <DeezerLogo src={ deezerLogo }/>
-              </a>
-            </CardButtons>
-          </RightCard>
-        </MusicCard>
+        <MusicCard 
+          music={music}
+          playOrPause={playOrPause}
+          saveFavoriteList={saveFavoriteList}
+        />
       )})
     )
   }

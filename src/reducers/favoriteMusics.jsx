@@ -14,7 +14,7 @@ function favoriteMusics(state = INITIAL_STATE, action) {
   case NEW_FAVORITE_MUSIC:
     return {
       ...state,
-      favoriteList: [...state.favoriteList, newFavorite],
+      favoriteList: [...newFavorite],
     };
   case REMOVE_FAVORITE_MUSIC:
     return {

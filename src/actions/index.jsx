@@ -1,4 +1,4 @@
-import searchMusicById from "../services/searchMusicById";
+// import searchMusicById from "../services/searchMusicById";
 
 export const NEW_FAVORITE_MUSIC = 'NEW_FAVORITE_MUSIC';
 export const REMOVE_FAVORITE_MUSIC = 'REMOVE_FAVORITE_MUSIC';
@@ -8,8 +8,7 @@ export const submitFavoriteMusic = (musicData) => ({
   newFavorite: musicData,
 });
 
-export const dispatchFavoriteMusic = (musicId) => async (dispatch) => {
-  const musicData = await searchMusicById(musicId);
+export const dispatchFavoriteMusic = (musicData) => async (dispatch) => {
   return dispatch(submitFavoriteMusic(musicData));
 };
 

@@ -15,7 +15,7 @@ export default function AudioPlayer({ musicUrl, isPlaying, setIsPlaying }) {
   }, [isPlaying])
 
   return (
-    <div className="controls">
+    <div>
       <audio src={ musicUrl } autoPlay="autoplay" ref={ audioRef }/>
       <div className="vlme">
       <span className="volum"><i className="fas fa-volume-down"></i></span>

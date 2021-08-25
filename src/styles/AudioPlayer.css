@@ -1,9 +1,0 @@
-.controls {
-  display: flex;
-  flex-direction: row;
-  height: 60px;
-  background: #3a3a3a;
-  color: white;
-  align-items: center;
-  position: relative;
-}

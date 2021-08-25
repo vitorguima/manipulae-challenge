@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const MusicCard = styled.div`
+export const MusicCardWrapper = styled.div`
   display: flex;
   align-items: center;
   align-content: center;
