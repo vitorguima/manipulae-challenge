@@ -96,7 +96,8 @@ function MusicDisvorey({ saveFavoriteMusic }) {
         .map((music, index) => {
         if (musicList.length === index + 1) {
           return (
-          <MusicCard 
+          <MusicCard
+            key={index}
             music={music}
             musicRef={lastMusicElementRef}
             playOrPause={playOrPause}
@@ -105,6 +106,7 @@ function MusicDisvorey({ saveFavoriteMusic }) {
         )}
         return (
         <MusicCard 
+          key={index}
           music={music}
           playOrPause={playOrPause}
           saveFavoriteList={saveFavoriteList}
