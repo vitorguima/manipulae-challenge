@@ -1,4 +1,4 @@
-# Desafio realizado para a vaga de front end na empresa Manipulaê
+# Desafio realizado para a vaga de front-end na empresa Manipulaê
 
 O desafio consiste na criação de uma aplicação em que um determinado usuário possa buscar diferentes músicas utilizando os seguintes parâmetros:
 
