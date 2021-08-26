@@ -3,7 +3,7 @@ import colors from './global';
 
 export const SearchBarStyle = styled.div`
   height: 48px;
-  width: 650px;
+  width: 100%;
   position: relative;
   margin: 15px 24px;
   border-radius: 100px;
@@ -11,7 +11,7 @@ export const SearchBarStyle = styled.div`
   input {
     height: 48px;
     padding: 0 54px;
-    width: 500px;
+    width: 70%;;
     border-radius: 100px;
     border: 1px solid #BEBEBE;
     font-size: 14px; 
@@ -29,7 +29,7 @@ export const SearchBarStyle = styled.div`
   img {
     position: absolute;
     top: 30%;
-    left: 34px;
+    left: 10%;
     transform: translateY(-50);
     z-index: 10;
     width: 16px;
@@ -38,8 +38,8 @@ export const SearchBarStyle = styled.div`
 `;
 
 export const SearchButton = styled.span`
-  heigth: 20px;
-  padding: 4px 30px;
+  heigth: 10%;
+  padding: 4px 7%;
   color: ${colors.gray};
   border: 2px solid #ACE1AF;
   cursor: pointer;
@@ -55,8 +55,8 @@ export const SearchButton = styled.span`
 `;
 
 export const ClearButton = styled.span`
-  heigth: 20px;
-  padding: 4px 30px;
+  heigth: 10%;
+  padding: 4px 7%;
   font-weigth: 99999999;
   color: ${colors.gray};
   border: 2px solid #fd5c63;

@@ -4,7 +4,7 @@ import colors from './global';
 const NavButton = styled.span`
   heigth: 20px;
   line-heigth: 48px;
-  padding: 12px 55px;
+  padding: 12px 12%;
   font-weigth: 99999999;
   color: ${colors.gray};
   background: ${colors.white};
