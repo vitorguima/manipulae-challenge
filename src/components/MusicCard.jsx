@@ -30,7 +30,13 @@ function MusicCard(props) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const convertSecondsToMinutes = (time) => {
-    return Math.floor(time / 60) + ":" + (time % 60 ? time % 60 : '00');
+    var mins = ~~((time % 3600) / 60);
+    var secs = ~~time % 60;
+
+    let ret = "";
+    ret = ` ${mins}${':'}${(secs < 10 ? '0' : '')}`;
+    ret += `${secs}`;
+    return ret;
   };
 
   const musicNameLimit = (name) => {
@@ -99,7 +105,10 @@ function MusicCard(props) {
           setIsPlaying={setIsPlaying}
         />
           { handleFavoriteButton(music.id) }
-          <a href={music.link}>
+          <a href={music.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <DeezerLogo src={ deezerLogo }/>
           </a>
         </CardButtons >
