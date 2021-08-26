@@ -22,6 +22,13 @@ Além disso, esse mesmo usuário também deve poder salvar suas músicas favorit
 * **npm install / npm yarn**
 * **npm start**
 
+## Comentários sobre o código
+
+* Resolução do problema de CORS utilizando a seguinte dependência: [cors-anywhere](https://github.com/Rob--W/cors-anywhere). Isso foi feito para garantir que as requests à API aconteçam para qualquer pessoa que queira utilizar a aplicação.
+* Armazenamento das músicas favoritas em uma redux store e, além disso, também adicionada a localStorage (esse segundo ponto foi feito pensando no usuário, que poderá acessar as músicas que salvou mesmo fechando a página da aplicação).
+* Para navegação através dos cards renderizados na página "Músicas", foi utilizado o conceito de infinity scroll, ao invés da paginação tradicional. O mesmo foi feito utilizando um observer e, além disso, a lógica da implementação foi feita pensando nos conceitos de "debounce" and "throttle". Ou seja, evitando um possível mal uso dessa feature.
+* A estilização foi feita através da biblioteca **styled-components**.
+
 ## Resultado final
 
 ![App Layout](https://github.com/vitorguima/manipulae-challenge/blob/3b68e2254b57894bbb4e7ddbb196589820737fcc/teste%20final.png)
