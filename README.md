@@ -21,3 +21,7 @@ Além disso, esse mesmo usuário também deve poder salvar suas músicas favorit
 * [Clonar o repositório](https://docs.github.com/pt/github/creating-cloning-and-archiving-repositories/cloning-a-repository-from-github/cloning-a-repository)
 * **npm install / npm yarn**
 * **npm start**
+
+## Resultado final
+
+![App Layout](https://github.com/vitorguima/manipulae-challenge/blob/3b68e2254b57894bbb4e7ddbb196589820737fcc/teste%20final.png)
