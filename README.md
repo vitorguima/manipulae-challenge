@@ -29,6 +29,7 @@ Além disso, esse mesmo usuário também deve poder salvar suas músicas favorit
 * Para navegação através dos cards renderizados na página ["Músicas"](https://github.com/vitorguima/manipulae-challenge/blob/96be927f968c7497da3fc7c7a9f5caafa8aef7d6/src/pages/MusicDiscovery.jsx), foi utilizado o conceito de infinity scroll ao invés da paginação tradicional. O mesmo foi feito utilizando um observer e, além disso, a lógica da implementação foi feita pensando nos conceitos de "debounce" and "throttle". Ou seja, de forma que um possível mal uso dessa feature seja evitado.
 * A estilização foi feita através da biblioteca **styled-components**.
 * Foram utilizados componentes funcionais para o gerenciamento de estados da aplicação. 
+* Para o desenvolvimento, foi utilizada a [API do Deezer](https://developers.deezer.com/api).
 
 ## Resultado final
 
