@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import PropTypes from 'prop-types';
+
 import { connect } from 'react-redux';
 
 import AudioPlayer from './AudioPlayer';
@@ -30,8 +32,8 @@ function MusicCard(props) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const convertSecondsToMinutes = (time) => {
-    var mins = Math.floor((time % 3600) / 60);
-    var secs = Math.floor(time % 60);
+    const mins = Math.floor((time % 3600) / 60);
+    const secs = Math.floor(time % 60);
 
     let ret = '';
     ret = ` ${mins}${':'}${(secs < 10 ? '0' : '')}`;
@@ -42,43 +44,45 @@ function MusicCard(props) {
   const musicNameLimit = (name) => {
     const maxCharacters = 30;
     if (name.length > maxCharacters) {
-      const treatedName = `${name.slice(0, 27)}...`
+      const treatedName = `${name.slice(0, 27)}...`;
       return treatedName;
     } return name;
-  }
+  };
 
   const handleFavoriteButton = (musicId) => {
     const musicIsFavorite = favoriteList ? favoriteList.some(({ id }) => id === musicId) : false;
     const storageFavorites = JSON.parse(window.localStorage.getItem('favoriteMusics'));
-    const isOnStorage = storageFavorites ? storageFavorites.some(({ id }) => id === musicId) : false;
+    const isOnStorage = storageFavorites
+      ? storageFavorites.some(({ id }) => id === musicId)
+      : false;
 
     if (musicIsFavorite || isOnStorage) {
       return (
         <FavoriteButton
+          type="button"
+          id={music.id}
+          onClick={({ target }) => saveFavoriteList(target)}
+        >
+          <img
+            src={blackHeartButton}
+            alt="play-button"
+            id={music.id}
+          />
+        </FavoriteButton>
+      );
+    } return (
+      <FavoriteButton
         type="button"
         id={music.id}
         onClick={({ target }) => saveFavoriteList(target)}
       >
-        <img 
-          src={blackHeartButton}
+        <img
+          src={heartButton}
           alt="play-button"
           id={music.id}
         />
       </FavoriteButton>
-      )
-    } return (
-      <FavoriteButton
-      type="button"
-      id={music.id}
-      onClick={({ target }) => saveFavoriteList(target)}
-    >
-      <img 
-        src={heartButton}
-        alt="play-button"
-        id={music.id}
-      />
-    </FavoriteButton>
-    )
+    );
   };
 
   return (
@@ -88,7 +92,7 @@ function MusicCard(props) {
     >
       <AlbumImage>
         <img
-          src={music.album.cover_medium} 
+          src={music.album.cover_medium}
           alt={music.title}
         />
       </AlbumImage>
@@ -98,23 +102,24 @@ function MusicCard(props) {
           <p>{musicNameLimit(music.artist.name)}</p>
           <p>{convertSecondsToMinutes(music.duration)}</p>
         </MusicInformation>
-        <CardButtons >
-        <AudioPlayer 
-          musicUrl={music.preview}
-          isPlaying={isPlaying}
-          setIsPlaying={setIsPlaying}
-        />
+        <CardButtons>
+          <AudioPlayer
+            musicUrl={music.preview}
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+          />
           { handleFavoriteButton(music.id) }
-          <a href={music.link}
+          <a
+            href={music.link}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <DeezerLogo src={ deezerLogo }/>
+            <DeezerLogo src={deezerLogo} />
           </a>
-        </CardButtons >
+        </CardButtons>
       </RightCard>
     </MusicCardWrapper>
-  )
+  );
 }
 
 const mapStateToProps = (state) => ({
@@ -122,3 +127,20 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(MusicCard);
+
+MusicCard.propTypes = {
+  music: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    duration: PropTypes.number,
+    preview: PropTypes.string,
+    album: PropTypes.shape({
+      cover_medium: PropTypes.string,
+    }).isRequired,
+    artis: PropTypes.shape({
+      name: PropTypes.string,
+    }).isRequired,
+    setIsPlaying: PropTypes.func,
+  }),
+  dispatchEpenses: PropTypes.func,
+}.isRequired;

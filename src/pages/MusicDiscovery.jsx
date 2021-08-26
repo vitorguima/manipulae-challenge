@@ -1,4 +1,8 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, {
+  useEffect, useState, useCallback, useRef,
+} from 'react';
+
+import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { dispatchFavoriteMusic } from '../actions';
@@ -8,7 +12,7 @@ import MusicCard from '../components/MusicCard';
 
 import getTopMusics from '../services/getTopMusics';
 import customMusicSearch from '../services/customMusicSearch';
-import searchMusicById from "../services/searchMusicById";
+import searchMusicById from '../services/searchMusicById';
 
 import { Header, NavWrapper, SearchBarWrapper } from '../styles/Header';
 
@@ -36,53 +40,50 @@ function MusicDisvorey({ saveFavoriteMusic, favoriteList }) {
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver((entries) => {
       const listRangeSum = 15;
-      if(entries[0].isIntersecting) {
+      if (entries[0].isIntersecting) {
         setlistRange((previousRange) => previousRange + listRangeSum);
       }
-    })
+    });
     if (node) observer.current.observe(node);
   }, [isLoading]);
 
   const customSearchOptions = {
     false: () => getTopMusics(listRange),
     true: () => customMusicSearch(searchType, searchValue, listRange),
-  }
+  };
 
   useEffect(() => {
     const setInicialMusicList = async () => {
       setLoading(true);
-      const musicList = await customSearchOptions[isCustomSearch]();
-      setMusicList([...musicList]);
+      const newMusicList = await customSearchOptions[isCustomSearch]();
+      setMusicList([...newMusicList]);
       setLoading(false);
-    }
+    };
     setInicialMusicList();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCustomSearch, totalSearchs]);
 
   useEffect(() => {
     saveFavoriteMusic([...favoriteList]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [favoriteStorage])
+  }, [favoriteStorage]);
 
   useEffect(() => {
     const lengthToNextLoad = 15;
     const setInicialMusicList = async () => {
       setLoading(true);
-      const musicList = await customSearchOptions[isCustomSearch]();
-      setMusicList((previousList) => [...previousList, ...musicList]);
+      const newMusicList = await customSearchOptions[isCustomSearch]();
+      setMusicList((previousList) => [...previousList, ...newMusicList]);
       setLoading(false);
-    }
+    };
     if (listRange >= lengthToNextLoad) {
       setInicialMusicList();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listRange]);
 
   const saveFavoriteList = async (target) => {
     const { id } = target;
-    const musicData = await searchMusicById(id)
+    const musicData = await searchMusicById(id);
     const musicIsFavorite = favoriteStorage.some((music) => music.id.toString() === id.toString());
-    
+
     if (!musicIsFavorite) {
       const newMusicList = [...favoriteStorage, musicData];
       saveFavoriteMusic(newMusicList);
@@ -90,34 +91,34 @@ function MusicDisvorey({ saveFavoriteMusic, favoriteList }) {
       return;
     }
     const newMusicList = favoriteStorage
-    ? favoriteStorage.filter((music) => music.id.toString() !== id.toString())
-    : favoriteList.filter((music) => music.id.toString() !== id.toString());
+      ? favoriteStorage.filter((music) => music.id.toString() !== id.toString())
+      : favoriteList.filter((music) => music.id.toString() !== id.toString());
     saveFavoriteMusic(newMusicList);
     setFavoriteStorage(newMusicList);
   };
 
-  const renderMusicList = () => {
-    return(
-      musicList
-        .map((music, index) => {
+  const renderMusicList = () => (
+    musicList
+      .map((music, index) => {
         if (musicList.length === index + 1) {
           return (
+            <MusicCard
+              key={music.id}
+              music={music}
+              musicRef={lastMusicElementRef}
+              saveFavoriteList={saveFavoriteList}
+            />
+          );
+        }
+        return (
           <MusicCard
-            key={index}
+            key={music.id}
             music={music}
-            musicRef={lastMusicElementRef}
             saveFavoriteList={saveFavoriteList}
           />
-        )}
-        return (
-        <MusicCard 
-          key={index}
-          music={music}
-          saveFavoriteList={saveFavoriteList}
-        />
-      )})
-    )
-  }
+        );
+      })
+  );
 
   return (
     <div>
@@ -140,10 +141,10 @@ function MusicDisvorey({ saveFavoriteMusic, favoriteList }) {
         <MusicListStyle>
           { musicList ? renderMusicList() : null }
         </MusicListStyle>
-        { isLoading ? <Spinner/> : null }
+        { isLoading ? <Spinner /> : null }
       </MusicListWrapper>
     </div>
-  )
+  );
 }
 
 const mapStateToProps = (state) => ({
@@ -155,3 +156,22 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MusicDisvorey);
+
+MusicDisvorey.propTypes = {
+  saveFavoriteMusic: PropTypes.func,
+  favoriteList: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string,
+      duration: PropTypes.number,
+      preview: PropTypes.string,
+      album: PropTypes.shape({
+        cover_medium: PropTypes.string,
+      }).isRequired,
+      artis: PropTypes.shape({
+        name: PropTypes.string,
+      }).isRequired,
+      setIsPlaying: PropTypes.func,
+    }),
+  ).isRequired,
+}.isRequired;

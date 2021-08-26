@@ -8,21 +8,21 @@ function favoriteMusics(state = INITIAL_STATE, action) {
   const {
     type,
     newFavorite,
-    newFavoriteList
+    newFavoriteList,
   } = action;
   switch (type) {
-  case NEW_FAVORITE_MUSIC:
-    return {
-      ...state,
-      favoriteList: [...newFavorite],
-    };
-  case REMOVE_FAVORITE_MUSIC:
-    return {
-      ...state,
-      favoriteList: [...newFavoriteList],
-    }
-  default:
-    return state;
+    case NEW_FAVORITE_MUSIC:
+      return {
+        ...state,
+        favoriteList: [...newFavorite],
+      };
+    case REMOVE_FAVORITE_MUSIC:
+      return {
+        ...state,
+        favoriteList: [...newFavoriteList],
+      };
+    default:
+      return state;
   }
 }
 

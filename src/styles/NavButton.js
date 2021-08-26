@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { colors } from './global';
+import colors from './global';
 
-export const NavButton = styled.span`
+const NavButton = styled.span`
   heigth: 20px;
   line-heigth: 48px;
   padding: 12px 55px;
@@ -19,3 +19,5 @@ export const NavButton = styled.span`
     text-decoration: underline; 
   }
 `;
+
+export default NavButton;

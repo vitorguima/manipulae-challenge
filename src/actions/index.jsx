@@ -9,7 +9,7 @@ export const submitFavoriteMusic = (musicData) => ({
 });
 
 export const dispatchFavoriteMusic = (musicData) => async (dispatch) => {
-  return dispatch(submitFavoriteMusic(musicData));
+  dispatch(submitFavoriteMusic(musicData));
 };
 
 export const removeFavoriteMusic = (newFavoriteList) => ({

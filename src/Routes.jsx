@@ -8,8 +8,8 @@ import UserFavoriteSongs from './pages/UserFavoriteSongs';
 function Routes() {
   return (
     <Switch>
-      <Route exact path="/" component={ MusicDiscovery } />
-      <Route path="/favorite-songs" component={ UserFavoriteSongs } />
+      <Route exact path="/" component={MusicDiscovery} />
+      <Route path="/favorite-songs" component={UserFavoriteSongs} />
     </Switch>
   );
 }

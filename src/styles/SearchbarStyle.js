@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { colors } from './global';
+import colors from './global';
 
 export const SearchBarStyle = styled.div`
   height: 48px;

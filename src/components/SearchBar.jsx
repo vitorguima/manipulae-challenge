@@ -1,5 +1,14 @@
 import React from 'react';
-import { SearchBarStyle, SearchButton, ClearButton, CheckList } from '../styles/SearchbarStyle';
+
+import PropTypes from 'prop-types';
+
+import {
+  SearchBarStyle,
+  SearchButton,
+  ClearButton,
+  CheckList,
+} from '../styles/SearchbarStyle';
+
 import SearchIcon from '../svg/search.svg';
 
 export default function SearchBar(props) {
@@ -11,31 +20,31 @@ export default function SearchBar(props) {
     totalSearchs,
     setTotalSearchs,
   } = props;
-  
+
   const handleSearch = (target) => {
     const { value } = target;
     setSearchValue(value);
-  }
+  };
 
   const handleCustomSearch = () => {
     setCustomSearch(true);
     setTotalSearchs(totalSearchs + 1);
-  }
+  };
 
   const cleanCustomSearch = () => {
     setCustomSearch(false);
     setSearchValue('');
     setSearchType('');
-  }
+  };
 
   return (
     <>
-      <form onSubmit={ ((e) => { e.preventDefault(); handleCustomSearch()}) }>
+      <form onSubmit={((e) => { e.preventDefault(); handleCustomSearch(); })}>
         <SearchBarStyle>
-          <img src={SearchIcon} alt="search-icon"/>
+          <img src={SearchIcon} alt="search-icon" />
           <input
-            value={ searchValue }
-            onChange={ (({ target }) => handleSearch(target)) }
+            value={searchValue}
+            onChange={(({ target }) => handleSearch(target))}
             type="text"
             id="song-searchbar"
             placeholder="Digite sua busca..."
@@ -49,7 +58,7 @@ export default function SearchBar(props) {
             name="search-type"
             type="radio"
             value="album"
-            onChange={ ({ target }) => setSearchType(target.value) }
+            onChange={({ target }) => setSearchType(target.value)}
           />
         </CheckList>
         <CheckList>
@@ -58,7 +67,7 @@ export default function SearchBar(props) {
             name="search-type"
             type="radio"
             value="track"
-            onChange={ ({ target }) => setSearchType(target.value) }
+            onChange={({ target }) => setSearchType(target.value)}
           />
         </CheckList>
         <CheckList>
@@ -67,12 +76,12 @@ export default function SearchBar(props) {
             name="search-type"
             type="radio"
             value="artist"
-            onChange={ ({ target }) => setSearchType(target.value) }
+            onChange={({ target }) => setSearchType(target.value)}
           />
         </CheckList>
       </div>
-      <div style={ { margin: '10px' } }>
-      <SearchButton
+      <div style={{ margin: '10px' }}>
+        <SearchButton
           type="button"
           onClick={() => handleCustomSearch()}
         >
@@ -86,5 +95,14 @@ export default function SearchBar(props) {
         </ClearButton>
       </div>
     </>
-  )
+  );
 }
+
+SearchBar.propTypes = {
+  searchValue: PropTypes.string,
+  setSearchValue: PropTypes.func,
+  setSearchType: PropTypes.string,
+  setCustomSearch: PropTypes.func,
+  totalSearchs: PropTypes.number,
+  setTotalSearchs: PropTypes.func,
+}.isRequired;
