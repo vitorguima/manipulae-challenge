@@ -19,7 +19,7 @@ export const SearchBarStyle = styled.div`
     color: ${colors.black};
     font-family: 'Montserrat 400', sans-serif;
     &::placeholder {
-      color: ${colors.grey}
+      color: ${colors.gray}
     }
     &:hover {
       box-shadow: 0 0 5px rgba(33,33,33,.2);
@@ -40,7 +40,7 @@ export const SearchBarStyle = styled.div`
 export const SearchButton = styled.span`
   heigth: 20px;
   padding: 4px 30px;
-  color: ${colors.grey};
+  color: ${colors.gray};
   border: 2px solid #ACE1AF;
   cursor: pointer;
   margin: 5px 25px;
@@ -58,7 +58,7 @@ export const ClearButton = styled.span`
   heigth: 20px;
   padding: 4px 30px;
   font-weigth: 99999999;
-  color: ${colors.grey};
+  color: ${colors.gray};
   border: 2px solid #fd5c63;
   cursor: pointer;
   margin: 8px 25px;
@@ -75,7 +75,7 @@ export const ClearButton = styled.span`
 export const CheckList = styled.span`
   color: black;
   margin: 10px 10px;
-  color: ${colors.grey};
+  color: ${colors.gray};
 
   input {
     margin: 3px;

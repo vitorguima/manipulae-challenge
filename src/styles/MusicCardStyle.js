@@ -77,7 +77,7 @@ export const PlayButton = styled.button`
   text-align: center;
 
   &:hover {
-    border: 1px solid ${colors.grey};
+    border: 1px solid ${colors.gray};
   }
 `;
 
