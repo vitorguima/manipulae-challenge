@@ -25,7 +25,7 @@ Além disso, esse mesmo usuário também deve poder salvar suas músicas favorit
 ## Comentários sobre o código
 
 * Resolução do problema de CORS utilizando a seguinte dependência: [cors-anywhere](https://github.com/Rob--W/cors-anywhere). Isso foi feito para garantir que as requests à API aconteçam para qualquer pessoa que queira utilizar a aplicação.
-* Além do armazenamento das músicas favoritas em uma redux store, as mesmas também foram adicionadas a localStorage (esse segundo ponto foi feito pensando no usuário, que poderá acessar as músicas que salvou mesmo fechando a página da aplicação).
+* Além do armazenamento das músicas favoritas em uma redux store, as mesmas também foram adicionadas à localStorage (esse segundo ponto foi feito pensando no usuário, que poderá acessar as músicas que salvou mesmo fechando a página da aplicação).
 * Para navegação através dos cards renderizados na página "Músicas", foi utilizado o conceito de infinity scroll ao invés da paginação tradicional. O mesmo foi feito utilizando um observer e, além disso, a lógica da implementação foi feita pensando nos conceitos de "debounce" and "throttle". Ou seja, de forma que um possível mal uso dessa feature seja evitado.
 * A estilização foi feita através da biblioteca **styled-components**.
 * Foram utilizados componentes funcionais para o gerenciamento de estados da aplicação. 
