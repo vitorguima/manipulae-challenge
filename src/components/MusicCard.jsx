@@ -30,10 +30,10 @@ function MusicCard(props) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const convertSecondsToMinutes = (time) => {
-    var mins = ~~((time % 3600) / 60);
-    var secs = ~~time % 60;
+    var mins = Math.floor((time % 3600) / 60);
+    var secs = Math.floor(time % 60);
 
-    let ret = "";
+    let ret = '';
     ret = ` ${mins}${':'}${(secs < 10 ? '0' : '')}`;
     ret += `${secs}`;
     return ret;
