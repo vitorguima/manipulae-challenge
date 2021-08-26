@@ -103,7 +103,8 @@ function MusicDisvorey({ saveFavoriteMusic, favoriteList }) {
         if (musicList.length === index + 1) {
           return (
             <MusicCard
-              key={music.id}
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
               music={music}
               musicRef={lastMusicElementRef}
               saveFavoriteList={saveFavoriteList}
@@ -112,7 +113,8 @@ function MusicDisvorey({ saveFavoriteMusic, favoriteList }) {
         }
         return (
           <MusicCard
-            key={music.id}
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
             music={music}
             saveFavoriteList={saveFavoriteList}
           />

@@ -42,7 +42,8 @@ function UserFavoriteSongs({ favoriteList, setNewFavoriteList }) {
     favoriteMusics
       .map((music) => (
         <MusicCard
-          key={music.id}
+          // eslint-disable-next-line no-undef
+          key={index}
           music={music}
           saveFavoriteList={removeFromFavorite}
         />
