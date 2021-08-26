@@ -17,6 +17,7 @@ export const SearchBarStyle = styled.div`
     font-size: 14px; 
     outline: none;
     color: ${colors.black};
+    font-family: 'Montserrat 400', sans-serif;
     &::placeholder {
       color: ${colors.grey}
     }
@@ -38,9 +39,7 @@ export const SearchBarStyle = styled.div`
 
 export const SearchButton = styled.span`
   heigth: 20px;
-  // line-heigth: 48px;
   padding: 4px 30px;
-  font-weigth: 99999999;
   color: ${colors.grey};
   border: 2px solid #ACE1AF;
   cursor: pointer;
@@ -57,7 +56,6 @@ export const SearchButton = styled.span`
 
 export const ClearButton = styled.span`
   heigth: 20px;
-  // line-heigth: 48px;
   padding: 4px 30px;
   font-weigth: 99999999;
   color: ${colors.grey};

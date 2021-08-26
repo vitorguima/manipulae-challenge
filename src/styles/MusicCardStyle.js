@@ -13,6 +13,7 @@ export const MusicCardWrapper = styled.div`
   box-shadow: 1px 2px 4px rgba(33,33,33,.2);
   background: #F8F8F8;
   opacity: 1;
+  font-family: 'Montserrat', sans-serif;
 
   &:hover {
     opacity: 0.8;
@@ -57,7 +58,7 @@ export const CardButtons = styled.div`
   align-content: center;
 
   button {
-    margin: 5px;
+    margin: 3px;
   }
 
   a {
@@ -67,7 +68,7 @@ export const CardButtons = styled.div`
 `;
 
 export const PlayButton = styled.button`
-  padding: 5px 10px;
+  padding: 5px 5px;
   border: 1px solid transparent;
   border-radius: 10px;
   background: transparent;
@@ -80,7 +81,7 @@ export const PlayButton = styled.button`
 `;
 
 export const FavoriteButton = styled.button`
-  padding: 5px 10px;
+  padding: 5px 5px;
   border: 1px solid transparent;
   border-radius: 10px;
   background: transparent;
@@ -93,7 +94,7 @@ export const FavoriteButton = styled.button`
 `;
 
 export const IsFavoriteButton = styled.button`
-  padding: 5px 10px;
+  padding: 5px 5px;
   border: 1px solid transparent;
   border-radius: 10px;
   background: #fd5c63;
@@ -112,4 +113,9 @@ export const RemoveButton = styled.button`
   &:hover {
     background: #ffa500;
   }
+`;
+
+export const MusicTitle = styled.p`
+  font-size: 20px;
+  font-weight: bolder;
 `;

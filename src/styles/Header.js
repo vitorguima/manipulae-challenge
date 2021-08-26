@@ -20,6 +20,7 @@ export const Header = styled.header`
 
 export const NavWrapper = styled.div`
   width: 25%;
+  font-family: 'Montserrat 400', sans-serif;
 `;
 
 export const SearchBarWrapper = styled.div`
@@ -27,4 +28,5 @@ export const SearchBarWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  font-family: 'Montserrat 400', sans-serif;
 `;

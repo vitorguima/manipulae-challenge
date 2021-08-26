@@ -16,6 +16,7 @@ import {
   CardButtons,
   FavoriteButton,
   IsFavoriteButton,
+  MusicTitle,
 } from '../styles/MusicCardStyle';
 
 function MusicCard(props) {
@@ -25,14 +26,12 @@ function MusicCard(props) {
     saveFavoriteList,
     favoriteList,
   } = props;
-  
+
   const [isPlaying, setIsPlaying] = useState(false);
 
   const convertSecondsToMinutes = (time) => {
     return Math.floor(time / 60) + ":" + (time % 60 ? time % 60 : '00');
   };
-
-
   const handleFavoriteButton = (musicId) => {
     const musicIsFavorite = favoriteList ? favoriteList.some(({ id }) => id === musicId) : false;
     const storageFavorites = JSON.parse(window.localStorage.getItem('favoriteMusics'));
@@ -80,7 +79,7 @@ function MusicCard(props) {
       </AlbumImage>
       <RightCard>
         <MusicInformation>
-          <p>{music.title}</p>
+          <MusicTitle>{music.title}</MusicTitle>
           <p>{music.artist.name}</p>
           <p>{convertSecondsToMinutes(music.duration)}</p>
         </MusicInformation>
