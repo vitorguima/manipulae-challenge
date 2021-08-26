@@ -6,6 +6,7 @@ import AudioPlayer from './AudioPlayer';
 
 import deezerLogo from '../images/deezerLogo.png';
 import heartButton from '../images/heart.png';
+import blackHeartButton from '../images/black-heart.png';
 
 import {
   MusicCardWrapper,
@@ -15,7 +16,6 @@ import {
   RightCard,
   CardButtons,
   FavoriteButton,
-  IsFavoriteButton,
   MusicTitle,
 } from '../styles/MusicCardStyle';
 
@@ -32,6 +32,15 @@ function MusicCard(props) {
   const convertSecondsToMinutes = (time) => {
     return Math.floor(time / 60) + ":" + (time % 60 ? time % 60 : '00');
   };
+
+  const musicNameLimit = (name) => {
+    const maxCharacters = 30;
+    if (name.length > maxCharacters) {
+      const treatedName = `${name.slice(0, 27)}...`
+      return treatedName;
+    } return name;
+  }
+
   const handleFavoriteButton = (musicId) => {
     const musicIsFavorite = favoriteList ? favoriteList.some(({ id }) => id === musicId) : false;
     const storageFavorites = JSON.parse(window.localStorage.getItem('favoriteMusics'));
@@ -39,17 +48,17 @@ function MusicCard(props) {
 
     if (musicIsFavorite || isOnStorage) {
       return (
-        <IsFavoriteButton
+        <FavoriteButton
         type="button"
         id={music.id}
         onClick={({ target }) => saveFavoriteList(target)}
       >
         <img 
-          src={heartButton}
+          src={blackHeartButton}
           alt="play-button"
           id={music.id}
         />
-      </IsFavoriteButton>
+      </FavoriteButton>
       )
     } return (
       <FavoriteButton
@@ -79,8 +88,8 @@ function MusicCard(props) {
       </AlbumImage>
       <RightCard>
         <MusicInformation>
-          <MusicTitle>{music.title}</MusicTitle>
-          <p>{music.artist.name}</p>
+          <MusicTitle>{musicNameLimit(music.title)}</MusicTitle>
+          <p>{musicNameLimit(music.artist.name)}</p>
           <p>{convertSecondsToMinutes(music.duration)}</p>
         </MusicInformation>
         <CardButtons >

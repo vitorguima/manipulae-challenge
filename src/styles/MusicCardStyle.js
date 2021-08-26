@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors } from './global';
 
 export const MusicCardWrapper = styled.div`
   display: flex;
@@ -70,13 +71,13 @@ export const CardButtons = styled.div`
 export const PlayButton = styled.button`
   padding: 5px 5px;
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: 100%;
   background: transparent;
   cursor: pointer;
   text-align: center;
 
   &:hover {
-    background: #ACE1AF;
+    border: 1px solid ${colors.grey};
   }
 `;
 
@@ -85,19 +86,6 @@ export const FavoriteButton = styled.button`
   border: 1px solid transparent;
   border-radius: 10px;
   background: transparent;
-  cursor: pointer;
-  text-align: center;
-
-  &:hover {
-    background: #fd5c63;
-  }
-`;
-
-export const IsFavoriteButton = styled.button`
-  padding: 5px 5px;
-  border: 1px solid transparent;
-  border-radius: 10px;
-  background: #fd5c63;
   cursor: pointer;
   text-align: center;
 `;
@@ -116,6 +104,6 @@ export const RemoveButton = styled.button`
 `;
 
 export const MusicTitle = styled.p`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bolder;
 `;

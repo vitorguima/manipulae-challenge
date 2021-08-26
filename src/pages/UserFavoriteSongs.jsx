@@ -58,7 +58,7 @@ function UserFavoriteSongs({ favoriteList, setNewFavoriteList }) {
       </Header>
       <MusicListWrapper>
         <MusicListStyle>
-          { favoriteList || favoriteStorage ? renderMusicList() : null }
+          { favoriteMusics ? renderMusicList() : null }
         </MusicListStyle>
       </MusicListWrapper>
     </div>

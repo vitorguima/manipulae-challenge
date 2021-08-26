@@ -19,7 +19,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import { MusicListStyle, MusicListWrapper } from '../styles/MusicListStyle';
 import Spinner from '../styles/Spinner';
 
-function MusicDisvorey({ saveFavoriteMusic }) {
+function MusicDisvorey({ saveFavoriteMusic, favoriteList }) {
   const [isLoading, setLoading] = useState(true);
   const [listRange, setlistRange] = useState(0);
   const [musicList, setMusicList] = useState([]);
@@ -82,7 +82,13 @@ function MusicDisvorey({ saveFavoriteMusic }) {
       const newMusicList = [...favoriteStorage, musicData];
       saveFavoriteMusic(newMusicList);
       setFavoriteStorage(newMusicList);
+      return;
     }
+    const newMusicList = favoriteStorage
+    ? favoriteStorage.filter((music) => music.id.toString() !== id.toString())
+    : favoriteList.filter((music) => music.id.toString() !== id.toString());
+    saveFavoriteMusic(newMusicList);
+    setFavoriteStorage(newMusicList);
   };
 
   const renderMusicList = () => {
@@ -127,7 +133,7 @@ function MusicDisvorey({ saveFavoriteMusic }) {
       </Header>
       <MusicListWrapper>
         <MusicListStyle>
-          { musicList ? renderMusicList() : null }
+          { favoriteList || favoriteStorage ? renderMusicList() : null }
         </MusicListStyle>
         { isLoading ? <Spinner/> : null }
       </MusicListWrapper>
@@ -135,8 +141,12 @@ function MusicDisvorey({ saveFavoriteMusic }) {
   )
 }
 
+const mapStateToProps = (state) => ({
+  favoriteList: state.favoriteMusics.favoriteList,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   saveFavoriteMusic: (musicId) => dispatch(dispatchFavoriteMusic(musicId)),
 });
 
-export default connect(null, mapDispatchToProps)(MusicDisvorey);
+export default connect(mapStateToProps, mapDispatchToProps)(MusicDisvorey);
