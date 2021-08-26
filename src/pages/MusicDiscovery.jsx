@@ -57,7 +57,12 @@ function MusicDisvorey({ saveFavoriteMusic, favoriteList }) {
     }
     setInicialMusicList();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCustomSearch, totalSearchs]);
+  }, [isCustomSearch, totalSearchs,]);
+
+  useEffect(() => {
+    saveFavoriteMusic([...favoriteList]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [favoriteList])
 
   useEffect(() => {
     const lengthToNextLoad = 15;
@@ -133,7 +138,7 @@ function MusicDisvorey({ saveFavoriteMusic, favoriteList }) {
       </Header>
       <MusicListWrapper>
         <MusicListStyle>
-          { favoriteList || favoriteStorage ? renderMusicList() : null }
+          { musicList ? renderMusicList() : null }
         </MusicListStyle>
         { isLoading ? <Spinner/> : null }
       </MusicListWrapper>
