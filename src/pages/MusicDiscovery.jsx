@@ -57,12 +57,12 @@ function MusicDisvorey({ saveFavoriteMusic, favoriteList }) {
     }
     setInicialMusicList();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCustomSearch, totalSearchs,]);
+  }, [isCustomSearch, totalSearchs]);
 
   useEffect(() => {
     saveFavoriteMusic([...favoriteList]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [favoriteList])
+  }, [favoriteStorage])
 
   useEffect(() => {
     const lengthToNextLoad = 15;
