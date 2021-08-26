@@ -129,7 +129,7 @@ function MusicDisvorey({ saveFavoriteMusic }) {
         <MusicListStyle>
           { musicList ? renderMusicList() : null }
         </MusicListStyle>
-        { isLoading ? <Spinner></Spinner> : null }
+        { isLoading ? <Spinner/> : null }
       </MusicListWrapper>
     </div>
   )

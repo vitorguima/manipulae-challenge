@@ -25,7 +25,7 @@ function MusicCard(props) {
     saveFavoriteList,
     favoriteList,
   } = props;
-
+  
   const [isPlaying, setIsPlaying] = useState(false);
 
   const convertSecondsToMinutes = (time) => {
