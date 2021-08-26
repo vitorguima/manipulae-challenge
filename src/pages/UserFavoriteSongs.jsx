@@ -40,9 +40,9 @@ function UserFavoriteSongs({ favoriteList, setNewFavoriteList }) {
 
   const renderMusicList = () => (
     favoriteMusics
-      .map((music) => (
+      .map((music, index) => (
         <MusicCard
-          // eslint-disable-next-line no-undef
+          // eslint-disable-next-line react/no-array-index-key
           key={index}
           music={music}
           saveFavoriteList={removeFromFavorite}
