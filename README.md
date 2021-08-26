@@ -29,7 +29,7 @@ Além disso, esse mesmo usuário também deve poder salvar suas músicas favorit
 
 * [Clonar o repositório](https://docs.github.com/pt/github/creating-cloning-and-archiving-repositories/cloning-a-repository-from-github/cloning-a-repository)
 * **npm install / yarn install**
-* **npm start**
+* **npm start / yarn  start**
 
 ## Resultado final
 
