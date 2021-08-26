@@ -6,7 +6,7 @@ O desafio consiste na criação de uma aplicação em que um determinado usuári
 * Nome do Artista responsável pela música
 * Nome do Álbum em que a música está disponível
 
-Além disso, esse mesmo usuário também deve poder salvar suas músicas favoritas em um local específico da aplicação, de forma que o mesmo pudesse acessá-las posteriormente, através de uma lista.
+Além disso, esse mesmo usuário também deve poder salvar suas músicas favoritas em um local específico da aplicação, de forma que o mesmo possa acessá-las posteriormente, através de uma lista.
 
 ## Tecnologias utilizadas
 
